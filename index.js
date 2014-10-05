@@ -72,9 +72,9 @@ var reddit = {
 
             if (!subscription.posts.length) {
               subscription.posts = posts;
-              //for (var p in subscription.posts) {
-              //  handleNewPost(subscription.posts[p],subscription.subreddit);
-              //}
+              for (var p in posts) {
+                handleNewPost(posts[p],subscription.subreddit);
+              }
             }
 
             for (var p in posts) {
@@ -102,7 +102,7 @@ var reddit = {
                   p.data.title+'" bgforhire@icloud.com'
                 ;
                 console.log(args);
-                var child = exec(args,$ArgsController);
+                //var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
                   if (error !== null) {
                     log('\033[31m'+error+' :: '+stderr);
@@ -125,6 +125,8 @@ var reddit = {
 };
 
 reddit
+  .subscribe('news/new')
+  .subscribe('news/hot')
   .subscribe('usnews/new')
   .subscribe('worldnews/new')
   .subscribe('usnews/hot')
