@@ -122,6 +122,7 @@ var reddit = {
                   while ((args.indexOf('"') >= 0)) {
                     string = string.replace('"','\"');
                   }
+                  return string;
                 }
               }
             }
