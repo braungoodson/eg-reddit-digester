@@ -62,10 +62,6 @@ var reddit = {
 
           try {
 
-            while (response.indexOf('`') >= 0) {
-              response = response.replace('`','')
-            }
-
             parseJsonResponse(JSON.parse(response));
 
           } catch (error) {
@@ -106,6 +102,16 @@ var reddit = {
                   s+'@blgse.com" -s "'+
                   p.data.title+'" bgforhire@icloud.com'
                 ;
+                //console.log('\033[35m'+s+'\033[34m '+p.data.title+'\033[37m '+p.data.url+'\033[0m');
+                while ((args.indexOf("'") >= 0)) {
+                  args = args.replace("'","\'");
+                }
+                while ((args.indexOf("`") >= 0)) {
+                  args = args.replace("`","\`");
+                }
+                while ((args.indexOf('"') >= 0)) {
+                  args = args.replace('"','\"');
+                }
                 console.log(args);
                 var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
