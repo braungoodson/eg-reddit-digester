@@ -101,6 +101,9 @@ var reddit = {
                   s+'@blgse.com" -s "'+
                   p.data.title+'" bgforhire@icloud.com'
                 ;
+                while (args.indexOf('`') >= 0) {
+                  args = args.replace('`','')
+                }
                 console.log(args);
                 var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
