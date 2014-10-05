@@ -61,20 +61,21 @@ var reddit = {
         function $EndController() {
 
           try {
+
             parseJsonResponse(JSON.parse(response));
+
           } catch (error) {
+
             log(error);
+
           }
 
           function parseJsonResponse(json) {
 
             var posts = json.data.children;
 
-            if (!subscription.posts.length) {
-              subscription.posts = posts;
-              for (var p in posts) {
-                handleNewPost(posts[p],subscription.subreddit);
-              }
+            if ((posts.length) > 5000) {
+              subscription.posts = [];
             }
 
             for (var p in posts) {
@@ -84,8 +85,7 @@ var reddit = {
                 }
               }
               if (!posts[p]._old) {
-                subscription.posts.unshift(posts[p]);
-                subscription.posts.pop();
+                subscription.posts.push(posts[p]);
                 handleNewPost(posts[p],subscription.subreddit);
               }
             }
@@ -96,7 +96,8 @@ var reddit = {
                 var args = ''+
                   'echo "'+
                     p.data.url+
-                    ' @cycle'+cycle+
+                    ' @cycle '+cycle+
+                    ' #posts '+posts.length+
                   '" | mail -a "From: '+
                   s+'@blgse.com" -s "'+
                   p.data.title+'" bgforhire@icloud.com'
@@ -105,7 +106,7 @@ var reddit = {
                   args = args.replace('`','')
                 }
                 console.log(args);
-                var child = exec(args,$ArgsController);
+                //var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
                   if (error !== null) {
                     log('\033[31m'+error+' :: '+stderr);
