@@ -97,7 +97,7 @@ var reddit = {
                   'echo "'+
                     sanitize(p.data.url)+
                     ' @cycle '+cycle+
-                    ' #posts '+posts.length+
+                    ' #posts '+subscription.posts.length+
                   '" | mail -a "From: '+
                   s+'@blgse.com" -s "'+
                   sanitize(p.data.title)+'" bgforhire@icloud.com'
