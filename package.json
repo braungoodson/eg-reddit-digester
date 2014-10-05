@@ -1,0 +1,27 @@
+{
+  "name": "eg-reddit-digester",
+  "version": "0.2.0",
+  "description": "subscribe to subreddits and get email when post places in top 25",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/braungoodson/eg-reddit-digester"
+  },
+  "keywords": [
+    "reddit",
+    "reddit",
+    "api",
+    "http",
+    "exec",
+    "mail"
+  ],
+  "author": "braungoodson@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/braungoodson/eg-reddit-digester/issues"
+  },
+  "homepage": "https://github.com/braungoodson/eg-reddit-digester"
+}
