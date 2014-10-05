@@ -102,7 +102,7 @@ var reddit = {
                   s+'@blgse.com" -s "'+
                   p.data.title+'" bgforhire@icloud.com'
                 ;
-                //console.log('\033[35m'+s+'\033[34m '+p.data.title+'\033[37m '+p.data.url+'\033[0m');
+                console.log('\033[35m'+s+'\033[34m '+p.data.title+'\033[37m '+p.data.url+'\033[0m');
                 while ((args.indexOf("'") >= 0)) {
                   args = args.replace("'","\'");
                 }
