@@ -119,7 +119,7 @@ var reddit = {
                   while ((string.indexOf("`") >= 0)) {
                     string = string.replace("`","\`");
                   }
-                  while ((args.indexOf('"') >= 0)) {
+                  while ((string.indexOf('"') >= 0)) {
                     string = string.replace('"','\"');
                   }
                   return string;
