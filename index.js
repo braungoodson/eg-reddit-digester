@@ -95,23 +95,14 @@ var reddit = {
               function sendEmail(p,s) {
                 var args = ''+
                   'echo "'+
-                    p.data.url+
+                    sanitize(p.data.url)+
                     ' @cycle '+cycle+
                     ' #posts '+posts.length+
                   '" | mail -a "From: '+
                   s+'@blgse.com" -s "'+
-                  p.data.title+'" bgforhire@icloud.com'
+                  sanitize(p.data.title)+'" bgforhire@icloud.com'
                 ;
                 console.log('\033[35m'+s+'\033[34m '+p.data.title+'\033[37m '+p.data.url+'\033[0m');
-                while ((args.indexOf("'") >= 0)) {
-                  args = args.replace("'","\'");
-                }
-                while ((args.indexOf("`") >= 0)) {
-                  args = args.replace("`","\`");
-                }
-                while ((args.indexOf('"') >= 0)) {
-                  args = args.replace('"','\"');
-                }
                 console.log(args);
                 var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
@@ -119,6 +110,17 @@ var reddit = {
                     log('\033[31m'+error+' :: '+stderr);
                   } else {
                     log('\033[32mSUCCESS');
+                  }
+                }
+                function sanitize(string) {
+                  while ((string.indexOf("'") >= 0)) {
+                    string = string.replace("'","\'");
+                  }
+                  while ((string.indexOf("`") >= 0)) {
+                    string = string.replace("`","\`");
+                  }
+                  while ((args.indexOf('"') >= 0)) {
+                    string = string.replace('"','\"');
                   }
                 }
               }
