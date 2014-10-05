@@ -102,7 +102,7 @@ var reddit = {
                   p.data.title+'" bgforhire@icloud.com'
                 ;
                 console.log(args);
-                //var child = exec(args,$ArgsController);
+                var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
                   if (error !== null) {
                     log('\033[31m'+error+' :: '+stderr);
