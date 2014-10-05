@@ -74,7 +74,7 @@ var reddit = {
 
             var posts = json.data.children;
 
-            if ((posts.length) > 5000) {
+            if ((subscription.posts.length) > 5000 || (subscription.posts.length) == 0) {
               subscription.posts = [];
             }
 
@@ -95,15 +95,15 @@ var reddit = {
               function sendEmail(p,s) {
                 var args = ''+
                   'echo "'+
-                    sanitize(p.data.url)+
+                    p.data.url+
                     ' @cycle '+cycle+
                     ' #posts '+subscription.posts.length+
                   '" | mail -a "From: '+
                   s+'@blgse.com" -s "'+
-                  sanitize(p.data.title)+'" bgforhire@icloud.com'
+                  p.data.title+'" bgforhire@icloud.com'
                 ;
-                //console.log('\033[35m'+s+'\033[34m '+p.data.title+'\033[37m '+p.data.url+'\033[0m');
-                console.log(args);
+                //log('\033[35m'+s+'\033[34m '+p.data.title+'\033[37m '+p.data.url+'\033[33m '+cycle+'c'+subscription.posts.length+'p');
+                //log('\033[30m >>> '+args);
                 var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
                   if (error !== null) {
@@ -111,18 +111,6 @@ var reddit = {
                   } else {
                     log('\033[32mSUCCESS');
                   }
-                }
-                function sanitize(string) {
-                  while ((string.indexOf("'") >= 0)) {
-                    string = string.replace("'","\'");
-                  }
-                  while ((string.indexOf("`") >= 0)) {
-                    string = string.replace("`","\`");
-                  }
-                  while ((string.indexOf('"') >= 0)) {
-                    string = string.replace('"','\"');
-                  }
-                  return string;
                 }
               }
             }
