@@ -23,7 +23,7 @@ var reddit = {
 
   cycles: 0,
 
-  digest: function() {
+  digest: function(init) {
 
     this.cycles += 1;
 
@@ -91,25 +91,41 @@ var reddit = {
             }
 
             function handleNewPost(post,subreddit) {
-              sendEmail(post,subreddit);
+              if (!init) {
+                sendEmail(post,subreddit);
+              }
               function sendEmail(p,s) {
+                var url = p.data.url.toString();
+                var title = p.data.title.toString();
+                var date = new Date().toString();
+                while (title.indexOf("'") > -1) {
+                  title = title.replace("'","");
+                }
+                while (title.indexOf("`") > -1) {
+                  title = title.replace("`","");
+                }
+                while (title.indexOf('"') > -1) {
+                  title = title.replace('"','');
+                }
                 var args = ''+
                   'echo "'+
-                    p.data.url+
+                    url+
                     ' @cycle '+cycle+
                     ' #posts '+subscription.posts.length+
+                    ' digested on ' +date+
                   '" | mail -a "From: '+
                   s+'@blgse.com" -s "'+
-                  p.data.title+'" bgforhire@icloud.com'
+                  title+'" bgforhire@icloud.com'
                 ;
                 //log('\033[35m'+s+'\033[34m '+p.data.title+'\033[37m '+p.data.url+'\033[33m '+cycle+'c'+subscription.posts.length+'p');
                 //log('\033[30m >>> '+args);
+                var stuff = '\033[35m'+s+'\033[34m '+title+'\033[37m '+url+'\033[33m '+cycle+'c'+subscription.posts.length+'p'+' -> \033[37m'+args;
                 var child = exec(args,$ArgsController);
                 function $ArgsController(error,stdout,stderr) {
                   if (error !== null) {
-                    log('\033[31m'+error+' :: '+stderr);
+                    log('\033[31mERROR '+error+' :: '+stderr+' :: '+stuff);
                   } else {
-                    log('\033[32mSUCCESS');
+                    log('\033[32mSUCCESS '+stuff);
                   }
                 }
               }
@@ -127,14 +143,12 @@ var reddit = {
 };
 
 reddit
-  .subscribe('news/new')
-  .subscribe('news/hot')
   .subscribe('usnews/new')
   .subscribe('worldnews/new')
   .subscribe('usnews/hot')
   .subscribe('worldnews/hot')
   .subscribe('learnprogramming/new')
-  .digest()
+  .digest(true)
 ;
 
 setInterval(reddit.digest.bind(reddit),30000);
